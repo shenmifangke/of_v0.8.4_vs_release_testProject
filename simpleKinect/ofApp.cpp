@@ -2,48 +2,31 @@
 
 //--------------------------------------------------------------
 void ofApp::setup(){
-	device_ = new ofxKinect2::Device();
-	device_->setup();
+	kinect.open();
+	kinect.initDepthSource();
+	kinect.initColorSource();
+	kinect.initInfraredSource();
+	kinect.initBodyIndexSource();
 
-	if(depth_.setup(*device_))
-	{
-		depth_.open();
-	}
-
-	if (color_.setup(*device_))
-	{
-		color_.open();
-	}
-
-	if (ir_.setup(*device_))
-	{
-		ir_.open();
-	}
-	if (body_.setup(*device_))
-	{
-		body_.open();
-	}
-
+	ofSetWindowShape(640 * 2, 480 * 2);
 }
 
 //--------------------------------------------------------------
 void ofApp::update(){
-	device_->update();
+	this->kinect.update();
 }
 
 //--------------------------------------------------------------
 void ofApp::draw(){
-	color_.draw(0,0,ofGetWidth(),ofGetHeight());
-	depth_.draw(ofGetWidth()- 512, ofGetHeight() - 424);
-	ir_.draw(ofGetWidth() - 512, ofGetHeight() - 848);
-	body_.draw();
-	//myBody.drawBody();
-
+	this->kinect.getDepthSource()->draw(0,0,640,480); // note that the depth texture is RAW so may appear dark
+	this->kinect.getColorSource()->draw(640,0,640,480);
+	this->kinect.getInfraredSource()->draw(0,480,640,480);
+	this->kinect.getBodyIndexSource()->draw(640,480,640,480);
 }
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
-
+	
 }
 
 //--------------------------------------------------------------
@@ -52,7 +35,7 @@ void ofApp::keyReleased(int key){
 }
 
 //--------------------------------------------------------------
-void ofApp::mouseMoved(int x, int y ){
+void ofApp::mouseMoved(int x, int y){
 
 }
 
@@ -84,16 +67,4 @@ void ofApp::gotMessage(ofMessage msg){
 //--------------------------------------------------------------
 void ofApp::dragEvent(ofDragInfo dragInfo){ 
 
-}
-
-//--------------------------------------------------------------
-void ofApp::exit()
-{
-	color_.close();
-	depth_.close();
-	ir_.close();
-	body_.close();
-	device_->exit();
-	delete device_;
-	device_ = NULL;
 }

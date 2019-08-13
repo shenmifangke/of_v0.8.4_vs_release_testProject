@@ -1,7 +1,7 @@
 #pragma once
 
 #include "ofMain.h"
-#include "ofxKinect2.h"
+#include "ofxKinectForWindows2.h"
 
 class ofApp : public ofBaseApp{
 
@@ -20,14 +20,5 @@ class ofApp : public ofBaseApp{
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
 
-		void exit();
-
-		ofxKinect2::Device* device_;
-
-		ofxKinect2::IrStream ir_;
-		ofxKinect2::ColorStream color_;
-		ofxKinect2::DepthStream depth_;
-		ofxKinect2::BodyStream body_;
-		ofxKinect2::Body myBody;
-		
+		ofxKFW2::Device kinect;
 };
