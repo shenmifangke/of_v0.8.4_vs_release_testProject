@@ -2,6 +2,8 @@
 
 #include "ofMain.h"
 #include "ofxKinectForWindows2.h"
+#include "ofxCvGui.h"
+
 class ofApp : public ofBaseApp{
 
 	public:
@@ -20,5 +22,6 @@ class ofApp : public ofBaseApp{
 		void gotMessage(ofMessage msg);
 
 		ofxKFW2::Device kinect;
+		ofxCvGui::Builder gui;
 		ofMesh mesh;
 };
